@@ -32,16 +32,35 @@ CGRect screenFrame() {
 {
     [super viewDidLoad];
 
-    self.scrollView = [[UIScrollView alloc] initWithFrame:screenFrame()];
+    // Подписываемся на события клавиатуры
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self
+           selector:@selector(keyboardWillShowNotification:)
+               name:UIKeyboardWillShowNotification
+             object:nil];
 
+    [nc addObserver:self
+           selector:@selector(keyboardDidShowNotification:)
+               name:UIKeyboardDidShowNotification
+             object:nil];
+    
+    [nc addObserver:self
+           selector:@selector(keyboardWillHideNotification:)
+               name:UIKeyboardWillHideNotification
+             object:nil];
+    
+    self.scrollView = [[UIScrollView alloc] initWithFrame:screenFrame()];
+    self.scrollView.scrollEnabled = YES;
+    self.scrollView.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.5];
+    
     [self.view addSubview:self.scrollView];
 
     UITextField *textField;
 
-    textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 100, CGRectGetWidth(self.view.frame), 30)];
+    textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 30)];
     textField.backgroundColor = [UIColor grayColor];
     textField.borderStyle = UITextBorderStyleRoundedRect;
-    textField.placeholder = @"Enter the text";
+    textField.placeholder = @"Enter the text 1";
     textField.delegate = self;
 
     [self.scrollView addSubview:textField];
@@ -49,43 +68,74 @@ CGRect screenFrame() {
     textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 400, CGRectGetWidth(self.view.frame), 30)];
     textField.backgroundColor = [UIColor grayColor];
     textField.borderStyle = UITextBorderStyleRoundedRect;
-    textField.placeholder = @"Enter the text";
+    textField.placeholder = @"Enter the text 2";
     textField.delegate = self;
 
     [self.scrollView addSubview:textField];
 
-    textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 700, CGRectGetWidth(self.view.frame), 30)];
+    textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 800, CGRectGetWidth(self.view.frame), 30)];
     textField.backgroundColor = [UIColor grayColor];
     textField.borderStyle = UITextBorderStyleRoundedRect;
-    textField.placeholder = @"Enter the text";
+    textField.placeholder = @"Enter the text 3";
     textField.delegate = self;
 
     [self.scrollView addSubview:textField];
 
-    self.scrollView.contentSize = (CGSize){0, CGRectGetMaxY(textField.frame)};
+    // Чисто фиктивный лабел, который изображает область до которой вы хотите иметь возможность доскролливать в Вашем реальном приложении
+    UILabel *bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 900, CGRectGetWidth(self.view.frame), 100)];
+    bottomLabel.backgroundColor = [UIColor redColor];
+    bottomLabel.text = @"ПОДВАЛ";
+
+    [self.scrollView addSubview:bottomLabel];
+
+    // Выставляем размер области скролла по низу подвала
+    self.scrollView.contentSize = (CGSize){0, CGRectGetMaxY(bottomLabel.frame)}; 
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    self.scrollView.contentOffset = (CGPoint){
+    // Свойство "текущее поле" нужно для того, чтобы работать с текущем поле в клавиатурных событиях-нотификациях
+    self.currentTextField = textField;
+}
+
+-(void)keyboardWillShowNotification:(NSNotification *)aNotification {
+}
+
+-(void)keyboardDidShowNotification:(NSNotification *)aNotification {
+    CGRect keyboardScreenRect = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+
+    CGRect scrollViewFrame = self.scrollView.frame;
+
+    scrollViewFrame.size.height -= CGRectGetHeight(keyboardScreenRect);
+
+    self.scrollView.frame = scrollViewFrame;
+
+    [self.scrollView setContentOffset:(CGPoint){
         0,
-        CGRectGetMinY(textField.frame)
-    };
+        fminf(CGRectGetMinY(self.currentTextField.frame), self.scrollView.contentSize.height - CGRectGetHeight(self.scrollView.frame))
+    } animated:YES];
+}
+
+-(void)keyboardWillHideNotification:(NSNotification *)aNotification {
+    CGRect keyboardScreenRect = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    CGSize contentSize = self.scrollView.contentSize;
+    contentSize.height -= CGRectGetHeight(keyboardScreenRect);
+
+    CGRect scrollViewFrame = self.scrollView.frame;
+
+    scrollViewFrame.size.height += CGRectGetHeight(keyboardScreenRect);
+
+    self.scrollView.frame = scrollViewFrame;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    self.scrollView.contentOffset = CGPointZero;
+    self.currentTextField = nil;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
 
     return YES;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

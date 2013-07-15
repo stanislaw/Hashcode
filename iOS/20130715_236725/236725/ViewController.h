@@ -11,5 +11,6 @@
 @interface ViewController : UIViewController <UITextFieldDelegate>
 
 @property UIScrollView *scrollView;
+@property (weak, nonatomic) UITextField *currentTextField;
 
 @end
