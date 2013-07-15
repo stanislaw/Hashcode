@@ -13,4 +13,6 @@
 @property UIScrollView *scrollView;
 @property (weak, nonatomic) UITextField *currentTextField;
 
+@property CGFloat keyboardHeight;
+
 @end

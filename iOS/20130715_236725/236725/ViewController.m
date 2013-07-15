@@ -95,37 +95,32 @@ CGRect screenFrame() {
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     // Свойство "текущее поле" нужно для того, чтобы работать с текущем поле в клавиатурных событиях-нотификациях
     self.currentTextField = textField;
+
 }
 
 -(void)keyboardWillShowNotification:(NSNotification *)aNotification {
+
 }
 
 -(void)keyboardDidShowNotification:(NSNotification *)aNotification {
     CGRect keyboardScreenRect = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
 
-    CGRect scrollViewFrame = self.scrollView.frame;
-
-    scrollViewFrame.size.height -= CGRectGetHeight(keyboardScreenRect);
-
-    self.scrollView.frame = scrollViewFrame;
+    CGSize contentSize = self.scrollView.contentSize;
+    contentSize.height += CGRectGetHeight(keyboardScreenRect);
+    self.scrollView.contentSize = contentSize;
 
     [self.scrollView setContentOffset:(CGPoint){
         0,
         fminf(CGRectGetMinY(self.currentTextField.frame), self.scrollView.contentSize.height - CGRectGetHeight(self.scrollView.frame))
-    } animated:YES];
+    } animated:NO];
 }
 
 -(void)keyboardWillHideNotification:(NSNotification *)aNotification {
     CGRect keyboardScreenRect = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    
+
     CGSize contentSize = self.scrollView.contentSize;
     contentSize.height -= CGRectGetHeight(keyboardScreenRect);
-
-    CGRect scrollViewFrame = self.scrollView.frame;
-
-    scrollViewFrame.size.height += CGRectGetHeight(keyboardScreenRect);
-
-    self.scrollView.frame = scrollViewFrame;
+    self.scrollView.contentSize = contentSize;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
