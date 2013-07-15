@@ -10,8 +10,7 @@
 
 ### 2013-05-25
 
-[#222916](http://hashcode.ru/questions/222916/ruby-on-rails-rails-%D1%81%D0%B2%D1%8F%D0%B7%D1%8C-%D0%BC%D0%B5%D0%B6%D0%B4%D1%83-%D0%B4%D0%B2%D1%83%D0%BC%D1%8F-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D1%8F%D0%BC%D0%B8)
-- [Rails связь между двумя моделями](https://github.com/stanislaw/Hashcode/tree/master/Ruby/20130523_222916)
+[#222916](http://hashcode.ru/questions/222916/ruby-on-rails-rails-%D1%81%D0%B2%D1%8F%D0%B7%D1%8C-%D0%BC%D0%B5%D0%B6%D0%B4%D1%83-%D0%B4%D0%B2%D1%83%D0%BC%D1%8F-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D1%8F%D0%BC%D0%B8) - [Rails связь между двумя моделями](https://github.com/stanislaw/Hashcode/tree/master/Ruby/20130523_222916)
 
 
 
