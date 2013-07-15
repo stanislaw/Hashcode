@@ -33,7 +33,6 @@ CGRect screenFrame() {
     [super viewDidLoad];
 
     self.scrollView = [[UIScrollView alloc] initWithFrame:screenFrame()];
-    self.scrollView.contentSize = (CGSize){0, 1000};
 
     [self.view addSubview:self.scrollView];
 
@@ -47,7 +46,7 @@ CGRect screenFrame() {
 
     [self.scrollView addSubview:textField];
 
-    textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 200, CGRectGetWidth(self.view.frame), 30)];
+    textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 400, CGRectGetWidth(self.view.frame), 30)];
     textField.backgroundColor = [UIColor grayColor];
     textField.borderStyle = UITextBorderStyleRoundedRect;
     textField.placeholder = @"Enter the text";
@@ -55,14 +54,15 @@ CGRect screenFrame() {
 
     [self.scrollView addSubview:textField];
 
-    textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 300, CGRectGetWidth(self.view.frame), 30)];
+    textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 700, CGRectGetWidth(self.view.frame), 30)];
     textField.backgroundColor = [UIColor grayColor];
     textField.borderStyle = UITextBorderStyleRoundedRect;
     textField.placeholder = @"Enter the text";
     textField.delegate = self;
-    
+
     [self.scrollView addSubview:textField];
 
+    self.scrollView.contentSize = (CGSize){0, CGRectGetMaxY(textField.frame)};
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
