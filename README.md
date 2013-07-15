@@ -2,6 +2,10 @@
 
 ## iOS
 
+### 2013-07-16
+
+[236725 - UIScrollView и всплывающая клавиатура - скролл к активному текстовому полю](https://github.com/stanislaw/Hashcode/tree/master/iOS/20130715_236725)
+
 ## Ruby
 
 ### 2013-05-25
