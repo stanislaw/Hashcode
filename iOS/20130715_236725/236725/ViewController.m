@@ -40,11 +40,6 @@ CGRect screenFrame() {
              object:nil];
 
     [nc addObserver:self
-           selector:@selector(keyboardDidShowNotification:)
-               name:UIKeyboardDidShowNotification
-             object:nil];
-    
-    [nc addObserver:self
            selector:@selector(keyboardWillHideNotification:)
                name:UIKeyboardWillHideNotification
              object:nil];
@@ -92,27 +87,31 @@ CGRect screenFrame() {
     self.scrollView.contentSize = (CGSize){0, CGRectGetMaxY(bottomLabel.frame)}; 
 }
 
+- (void)scrollToTextField:(UITextField *)textField {
+    [self.scrollView setContentOffset:(CGPoint){
+        0,
+        fminf(CGRectGetMinY(textField.frame), self.scrollView.contentSize.height - CGRectGetHeight(self.scrollView.frame))
+    } animated:YES];
+}
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    // Свойство "текущее поле" нужно для того, чтобы работать с текущем поле в клавиатурных событиях-нотификациях
     self.currentTextField = textField;
 
+    if (self.keyboardIsPresent) {
+        [self scrollToTextField:self.currentTextField];
+    }
 }
 
--(void)keyboardWillShowNotification:(NSNotification *)aNotification {
-
-}
-
--(void)keyboardDidShowNotification:(NSNotification *)aNotification {
+- (void)keyboardWillShowNotification:(NSNotification *)aNotification {
     CGRect keyboardScreenRect = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
 
     CGSize contentSize = self.scrollView.contentSize;
     contentSize.height += CGRectGetHeight(keyboardScreenRect);
     self.scrollView.contentSize = contentSize;
 
-    [self.scrollView setContentOffset:(CGPoint){
-        0,
-        fminf(CGRectGetMinY(self.currentTextField.frame), self.scrollView.contentSize.height - CGRectGetHeight(self.scrollView.frame))
-    } animated:NO];
+    [self scrollToTextField:self.currentTextField];
+
+    self.keyboardIsPresent = YES;
 }
 
 -(void)keyboardWillHideNotification:(NSNotification *)aNotification {
@@ -121,6 +120,8 @@ CGRect screenFrame() {
     CGSize contentSize = self.scrollView.contentSize;
     contentSize.height -= CGRectGetHeight(keyboardScreenRect);
     self.scrollView.contentSize = contentSize;
+
+    self.keyboardIsPresent = NO;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
