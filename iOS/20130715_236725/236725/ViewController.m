@@ -121,6 +121,8 @@ CGRect screenFrame() {
     contentSize.height -= CGRectGetHeight(keyboardScreenRect);
     self.scrollView.contentSize = contentSize;
 
+    // Здесь может быть возврат к началу экрана scrollTo CGSizeZero
+
     self.keyboardIsPresent = NO;
 }
 
