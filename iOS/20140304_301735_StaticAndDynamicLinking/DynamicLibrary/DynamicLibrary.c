@@ -13,3 +13,7 @@
 void hello_dynamic() {
     printf("hello dynamic!\n");
 }
+
+void hello_dynamic2() {
+    printf("hello dynamic!\n");
+}

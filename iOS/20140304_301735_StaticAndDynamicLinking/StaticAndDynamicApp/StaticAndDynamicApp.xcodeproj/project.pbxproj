@@ -10,10 +10,10 @@
 		8641D1F418C64C0000B109E4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8641D1F318C64C0000B109E4 /* Foundation.framework */; };
 		8641D1F718C64C0000B109E4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8641D1F618C64C0000B109E4 /* main.m */; };
 		8641D1FB18C64C0000B109E4 /* StaticAndDynamicApp.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8641D1FA18C64C0000B109E4 /* StaticAndDynamicApp.1 */; };
-		8641D22518C64E9000B109E4 /* StaticLibrary.c in Sources */ = {isa = PBXBuildFile; fileRef = 8641D22318C64E4B00B109E4 /* StaticLibrary.c */; };
 		8641D22818C64ED100B109E4 /* libStaticLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8641D21A18C64E0B00B109E4 /* libStaticLibrary.a */; };
 		8641D23618C6501200B109E4 /* libDynamicLibrary.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8641D22D18C64FBC00B109E4 /* libDynamicLibrary.dylib */; };
 		8641D23D18C6540F00B109E4 /* DynamicLibrary.c in Sources */ = {isa = PBXBuildFile; fileRef = 8641D23A18C6540700B109E4 /* DynamicLibrary.c */; };
+		8641D23E18C6575000B109E4 /* StaticLibrary.c in Sources */ = {isa = PBXBuildFile; fileRef = 8641D22318C64E4B00B109E4 /* StaticLibrary.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -268,7 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8641D22518C64E9000B109E4 /* StaticLibrary.c in Sources */,
+				8641D23E18C6575000B109E4 /* StaticLibrary.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +456,7 @@
 				8641D21C18C64E0B00B109E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8641D22E18C64FBC00B109E4 /* Build configuration list for PBXNativeTarget "DynamicLibrary" */ = {
 			isa = XCConfigurationList;
@@ -464,6 +465,7 @@
 				8641D23018C64FBC00B109E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
